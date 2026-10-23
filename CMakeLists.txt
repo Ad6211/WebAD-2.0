@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.21)
+
+project(WebAD VERSION 1.0.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Qt6 6.4 REQUIRED COMPONENTS Svg Widgets WebEngineWidgets)
+
+qt_add_executable(WebAD
+    src/main.cpp
+    src/browser_window.cpp
+    src/browser_window.h
+    src/resources.qrc
+)
+
+target_link_libraries(WebAD PRIVATE
+    Qt6::Widgets
+    Qt6::Svg
+    Qt6::WebEngineWidgets
+)
+
+if(MSVC)
+    target_compile_options(WebAD PRIVATE /W4 /permissive- /utf-8)
+else()
+    target_compile_options(WebAD PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(WIN32)
+    target_sources(WebAD PRIVATE src/webad.rc)
+    target_include_directories(WebAD PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+endif()
+
+set_target_properties(WebAD PROPERTIES
+    WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE TRUE
+)

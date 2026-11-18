@@ -1,0 +1,9 @@
+{
+  "name": "Mimo, le petit compagnon",
+  "version": "1.0.0",
+  "script": "content.js",
+  "matches": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}
